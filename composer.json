@@ -1,0 +1,23 @@
+{
+    "name": "ldbglobe/Tools",
+    "type": "library",
+    "description": "Micro Framework tools",
+    "keywords": [],
+    "homepage": "https://github.com/ldbglobe/Tools",
+    "support": {
+        "issues": "https://github.com/ldbglobe/Tools/issues",
+        "source": "https://github.com/ldbglobe/Tools"
+    },
+    "authors": [
+        {
+            "name": "Mathieu Delestre",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.0",
+    },
+    "autoload": {
+        "classmap": ["Cache.php","Http/Redirect.php","Page.php","PageComponent.php"]
+    }
+}
