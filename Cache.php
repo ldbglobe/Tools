@@ -1,5 +1,5 @@
 <?php
-namespace ldbglobe;
+namespace ldbglobe\tools;
 
 class Cache {
 	static $storageRoot = null;

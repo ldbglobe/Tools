@@ -1,5 +1,5 @@
 <?php
-namespace ldbglobe\Http;
+namespace ldbglobe\Http\tools;
 
 class Redirect {
 
