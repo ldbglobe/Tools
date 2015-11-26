@@ -1,12 +1,12 @@
 {
-    "name": "ldbglobe/Tools",
+    "name": "ldbglobe/tools",
     "type": "library",
     "description": "Micro Framework tools",
     "keywords": [],
-    "homepage": "https://github.com/ldbglobe/Tools",
+    "homepage": "https://github.com/ldbglobe/tools",
     "support": {
-        "issues": "https://github.com/ldbglobe/Tools/issues",
-        "source": "https://github.com/ldbglobe/Tools"
+        "issues": "https://github.com/ldbglobe/tools/issues",
+        "source": "https://github.com/ldbglobe/tools"
     },
     "authors": [
         {
