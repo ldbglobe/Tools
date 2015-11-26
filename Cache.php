@@ -12,9 +12,9 @@ class Cache {
 			throw new \Exception(
 "Invalid storage directory
 Settings samples :
-\\ldbglobe\Cache::\$storageRoot = '/var/myfolder/storage';
-\\ldbglobe\Cache::\$storageDefault = 'cache'; // default cache folder name
-\\ldbglobe\Cache::\$forceUpdate = false; // set to true deactivate cache handling"
+\\ldbglobe\\tools\\Cache::\$storageRoot = '/var/myfolder/storage';
+\\ldbglobe\\tools\\Cache::\$storageDefault = 'cache'; // default cache folder name
+\\ldbglobe\\tools\\Cache::\$forceUpdate = false; // set to true deactivate cache handling"
 				, 1);
 
 		$storage = $storage!==null ? $storage : self::$storageDefault;

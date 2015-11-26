@@ -1,6 +1,8 @@
 <?php
 namespace ldbglobe\tools;
 
+use ldbglobe\tools\PageComponentCapture;
+
 class PageComponent {
 	static $componentRoot = null;
 
@@ -10,7 +12,7 @@ class PageComponent {
 			throw new \Exception(
 "Invalid component directory
 Settings samples :
-\\ldbglobe\PageComponent::\$componentRoot = '/var/myfolder';"
+\\ldbglobe\\tools\\PageComponent::\$componentRoot = '/var/myfolder';"
 				, 1);
 
 		$this->componentName = $componentName;
@@ -40,7 +42,7 @@ Settings samples :
 
 	static function Capture()
 	{
-		return new \ldbglobe\PageComponentCapture();
+		return new PageComponentCapture();
 	}
 }
 

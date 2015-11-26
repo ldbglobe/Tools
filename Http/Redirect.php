@@ -1,5 +1,5 @@
 <?php
-namespace ldbglobe\Http\tools;
+namespace ldbglobe\tools\Http;
 
 class Redirect {
 
@@ -12,7 +12,7 @@ class Redirect {
 
 	function execute()
 	{
-		header('location:'.BASEPATH.$this->path.$this->query);
+		header('location:'.$this->path.$this->query,'301');
 		exit();
 	}
 }

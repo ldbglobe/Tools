@@ -10,7 +10,7 @@ class Page {
 			throw new \Exception(
 "Invalid component directory
 Settings samples :
-\\ldbglobe\Page::\$pageRoot = '/var/myfolder';"
+\\ldbglobe\\tools\\Page::\$pageRoot = '/var/myfolder';"
 				, 1);
 
 		$this->pageName = $pageName;
