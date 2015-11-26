@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "php": ">=5.2.0",
+        "php": ">=5.2.0"
     },
     "autoload": {
         "classmap": ["Cache.php","Http/Redirect.php","Page.php","PageComponent.php"]
