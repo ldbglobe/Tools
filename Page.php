@@ -4,7 +4,7 @@ namespace ldbglobe\tools;
 class Page {
 	static $pageRoot = null;
 
-	function __construct($pageName=null)
+	function __construct($requested_path=null)
 	{
 		if(!file_exists(self::$pageRoot) || !is_dir(self::$pageRoot))
 			throw new \Exception(
@@ -13,28 +13,50 @@ Settings samples :
 \\ldbglobe\\tools\\Page::\$pageRoot = '/var/myfolder';"
 				, 1);
 
-		$this->pageName = $pageName;
+		$this->requested_path = $requested_path;
+		// build request on construct
+		$this->request = (object)$this->buildRequest();
 	}
 
-	function getPath()
+	private function buildRequest($path = null,$param=array())
 	{
-		return self::$pageRoot.'/'.$this->pageName.'.php';
+		// request build only once
+		if(!isset($this->request))
+		{
+			$path = $path!==null ? $path : $this->requested_path;
+
+			$realpath = self::$pageRoot.'/'.$path.'.php';
+			if(file_exists($realpath))
+				return array('path'=>$path,'realpath'=>$realpath,'param'=>$param);
+
+			if(preg_match('/\/([^\/]+)$/',$path,$reg))
+			{
+				$param[] = $reg[1];
+				$newPath = preg_replace('/\/([^\/]+)$/','',$path);
+				if($newPath != $path)
+					return $this->buildRequest($newPath,$param);
+			}
+			return false;
+		}
 	}
 
-	function read($vars=null)
+	function exist()
 	{
-		if(file_exists($this->getPath()))
+		return $this->request!==false;
+	}
+
+	function read()
+	{
+		if($this->exist())
 		{
 			ob_start();
-			if(is_array($vars))
-				extract($vars);
-			require($this->getPath());
+			require($this->request->realpath);
 			return ob_get_clean();
 		}
 		return false;
 	}
-	function flush($vars=null)
+	function flush()
 	{
-		echo $this->read($vars);
+		echo $this->read();
 	}
 }
