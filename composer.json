@@ -15,9 +15,11 @@
         }
     ],
     "require": {
-        "php": ">=5.2.0"
+        "php": ">=5.2.0",
+        "j4mie/idiorm": ">= 1.5.0",
+        "j4mie/paris": ">= 1.5.0"
     },
     "autoload": {
-        "classmap": ["Cache.php","Http/Redirect.php","Page.php","PageComponent.php"]
+        "classmap": ["Cache.php","Entity.php","Http/Redirect.php","Page.php","PageComponent.php"]
     }
 }
