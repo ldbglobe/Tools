@@ -1,5 +1,5 @@
 <?php
-namespace ldbglobe\entity;
+namespace ldbglobe\tools;
 
 class Entity extends \Model {
 
