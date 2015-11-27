@@ -15,7 +15,7 @@ Settings samples :
 
 		$this->requested_path = $requested_path;
 		// build request on construct
-		$this->request = (object)$this->buildRequest();
+		$this->request = $this->buildRequest();
 	}
 
 	private function buildRequest($path = null,$param=array())
@@ -26,8 +26,8 @@ Settings samples :
 			$path = $path!==null ? $path : $this->requested_path;
 
 			$realpath = self::$pageRoot.'/'.$path.'.php';
-			if(file_exists($realpath))
-				return array('path'=>$path,'realpath'=>$realpath,'param'=>array_reverse($param));
+			if(file_exists($realpath) && is_file($realpath))
+				return (object)array('path'=>$path,'realpath'=>$realpath,'param'=>array_reverse($param));
 
 			if(preg_match('/\/([^\/]+)$/',$path,$reg))
 			{
