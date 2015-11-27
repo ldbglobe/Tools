@@ -59,4 +59,9 @@ Settings samples :
 	{
 		echo $this->read();
 	}
+
+	function get($name,$default=null)
+	{
+		return isset($this->request->param[$name]) ? $this->request->param[$name] : $default;
+	}
 }
