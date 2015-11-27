@@ -36,7 +36,7 @@ Settings samples :
 		echo $this->read();
 	}
 
-	function get($name,$default)
+	function get($name,$default=null)
 	{
 		return isset($this->route->{$name}) ? $this->route->{$name} : $default;
 	}
