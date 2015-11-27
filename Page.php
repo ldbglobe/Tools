@@ -4,7 +4,7 @@ namespace ldbglobe\tools;
 class Page {
 	static $pageRoot = null;
 
-	function __construct($route)
+	function __construct($route,$request)
 	{
 		if(!file_exists(self::$pageRoot) || !is_dir(self::$pageRoot))
 			throw new \Exception(
@@ -14,6 +14,7 @@ Settings samples :
 				, 1);
 
 		$this->route = $route;
+		$this->request = $request;
 	}
 
 	function exist()
