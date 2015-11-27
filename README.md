@@ -1,4 +1,4 @@
 # tools
 Micro Framework tools
 
-This library is actually ine development. Don't use at home kids !
+This library is actually in development. Don't use at home kids !
