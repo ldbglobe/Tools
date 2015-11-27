@@ -27,7 +27,7 @@ Settings samples :
 
 			$realpath = self::$pageRoot.'/'.$path.'.php';
 			if(file_exists($realpath))
-				return array('path'=>$path,'realpath'=>$realpath,'param'=>$param);
+				return array('path'=>$path,'realpath'=>$realpath,'param'=>array_reverse($param));
 
 			if(preg_match('/\/([^\/]+)$/',$path,$reg))
 			{

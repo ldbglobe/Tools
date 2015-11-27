@@ -28,15 +28,15 @@ Settings samples :
 	{
 		if(file_exists($this->getPath()))
 		{
-			return require($this->getPath());
+			ob_start();
+			require($this->getPath());
+			return ob_get_clean();
 		}
 		return false;
 	}
 	function flush()
 	{
-		$component = $this->read();
-		if($component)
-			echo $component->data;
+		echo $this->read();
 	}
 
 	function set($name,$value)
@@ -57,22 +57,5 @@ Settings samples :
 	function hash()
 	{
 		return sha1($this->name.serialize($this->vars));
-	}
-
-	static function Capture()
-	{
-		return new PageComponentCapture();
-	}
-}
-
-class PageComponentCapture {
-	function __construct()
-	{
-		ob_start();
-	}
-
-	function end()
-	{
-		return (object)array('data'=>ob_get_clean());
 	}
 }
