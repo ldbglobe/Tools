@@ -41,4 +41,9 @@ Settings samples :
 	{
 		return isset($this->route->{$name}) ? $this->route->{$name} : $default;
 	}
+
+	function component($componentName)
+	{
+		return new PageComponent($componentName);
+	}
 }
