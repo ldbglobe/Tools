@@ -14,9 +14,9 @@ class Entity extends \Model {
 		$entity = \Model::factory(get_called_class())->where('id',$id)->find_one();
 		return $entity ? $entity->onLoad() : false;
 	}
-	static function factory() // return ORM wrapper instance to make querying through idiorm
+	static function factory($class_name=null, $connection_name = NULL) // return ORM wrapper instance to make querying through idiorm
 	{
-		return \Model::factory(get_called_class());
+		return \Model::factory($class_name ? $class_name:get_called_class(), $connection_name);
 	}
 
 	// event hook (to override in your own entity extended classes)
