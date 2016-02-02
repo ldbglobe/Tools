@@ -4,7 +4,7 @@ namespace ldbglobe\tools;
 class Page {
 	static $pageRoot = null;
 
-	function __construct($route,$request)
+	function __construct($route, $request)
 	{
 		if(!file_exists(self::$pageRoot) || !is_dir(self::$pageRoot))
 			throw new \Exception(
@@ -44,6 +44,6 @@ Settings samples :
 
 	function component($componentName)
 	{
-		return new PageComponent($componentName);
+		return new PageComponent($componentName, $this->request);
 	}
 }

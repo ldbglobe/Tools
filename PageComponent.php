@@ -6,7 +6,7 @@ use ldbglobe\tools\PageComponentCapture;
 class PageComponent {
 	static $componentRoot = null;
 
-	function __construct($name=null)
+	function __construct($name, $request)
 	{
 		if(!file_exists(self::$componentRoot) || !is_dir(self::$componentRoot))
 			throw new \Exception(
@@ -15,6 +15,7 @@ Settings samples :
 \\ldbglobe\\tools\\PageComponent::\$componentRoot = '/var/myfolder';"
 				, 1);
 
+		$this->request = $request;
 		$this->name = $name;
 		$this->vars = array();
 	}
@@ -61,6 +62,6 @@ Settings samples :
 
 	function component($componentName)
 	{
-		return new PageComponent($componentName);
+		return new PageComponent($componentName, $this->request);
 	}
 }
