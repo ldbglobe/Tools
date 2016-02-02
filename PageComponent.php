@@ -58,4 +58,9 @@ Settings samples :
 	{
 		return sha1($this->name.serialize($this->vars));
 	}
+
+	function component($componentName)
+	{
+		return new PageComponent($componentName);
+	}
 }
