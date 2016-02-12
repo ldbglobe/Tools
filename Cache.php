@@ -36,6 +36,11 @@ Settings samples :
 		}
 	}
 
+	function exists()
+	{
+		return file_exists($this->getPath());
+	}
+
 	function isUpToDate()
 	{
 		return $this->timeLeft() > 0;
@@ -67,6 +72,11 @@ Settings samples :
 			$data = unserialize(file_get_contents($this->getPath()));
 			return $data['content'];
 		}
+	}
+
+	function touch()
+	{
+		touch($this->getPath());
 	}
 
 	function flush()
