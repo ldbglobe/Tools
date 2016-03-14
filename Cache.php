@@ -46,6 +46,11 @@ Settings samples :
 		return $this->timeLeft() > 0;
 	}
 
+	function captureUrl($url)
+	{
+		$this->write(file_get_contents($url));
+	}
+
 	function captureStart()
 	{
 		ob_start();
