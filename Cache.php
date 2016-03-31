@@ -23,6 +23,16 @@ Settings samples :
 		$this->ttl = $ttl;
 	}
 
+	static function ExternalToLocalUrl($url,$ttl, $storage=null)
+	{
+		$cache = new self('loadUrl'.$url,$ttl,$storage);
+		if(!$cache->isUpToDate())
+		{
+			$cache->captureUrl($url);
+		}
+		return $cache->getPath();
+	}
+
 	function getPath()
 	{
 		return self::$storageRoot.'/'.$this->storage.'/'.$this->uid;
