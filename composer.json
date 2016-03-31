@@ -16,8 +16,9 @@
     ],
     "require": {
         "php": ">=5.2.0",
-        "j4mie/idiorm": ">= 1.5.0",
-        "j4mie/paris": ">= 1.5.0"
+        "j4mie/idiorm": "^1.5.0",
+        "j4mie/paris": "^1.5.0",
+        "guzzlehttp/guzzle": "^6.2"
     },
     "autoload": {
         "classmap": ["Cache.php","Entity.php","Http/Redirect.php","Page.php","PageComponent.php"]

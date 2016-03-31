@@ -2,6 +2,7 @@
 namespace ldbglobe\tools;
 
 class Cache {
+	static $storageFolder = null;
 	static $storageRoot = null;
 	static $storageDefault = null;
 	static $forceUpdate = false;
@@ -23,19 +24,18 @@ Settings samples :
 		$this->ttl = $ttl;
 	}
 
-	static function ExternalToLocalUrl($url,$ttl, $storage=null)
+	static function ExternalToStorage($url,$ttl, $storage=null)
 	{
 		$cache = new self('loadUrl'.$url,$ttl,$storage);
 		if(!$cache->isUpToDate())
-		{
 			$cache->captureUrl($url);
-		}
-		return $cache->getPath();
+		return $cache;
 	}
 
-	function getPath()
+	function getPath($basepath=null)
 	{
-		return self::$storageRoot.'/'.$this->storage.'/'.$this->uid;
+		$basepath = $basepath!==NULL ? $basepath.'/' : self::$storageRoot.'/';
+		return $basepath.$this->storage.'/'.$this->uid;
 	}
 
 	function timeLeft() {
@@ -58,7 +58,10 @@ Settings samples :
 
 	function captureUrl($url)
 	{
-		$this->write(file_get_contents($url));
+		$client = new \GuzzleHttp\Client();
+		$response = $client->request('GET',$url,['http_errors'=>false]);
+		if($response->getStatusCode() == 200)
+			$this->write((string)$response->getBody());
 	}
 
 	function captureStart()
