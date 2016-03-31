@@ -74,11 +74,12 @@ Settings samples :
 		$this->write(ob_get_clean());
 	}
 
-	function write($content)
+	function write($content,$invalidate=false)
 	{
+		$time = $invalidate ? 0:time();
 		@mkdir(dirname($this->getPath()),0777,true);
 		return file_put_contents($this->getPath(),serialize(array(
-			'creation_time'=>time(),
+			'creation_time'=>$time,
 			'content'=>$content,
 			)));
 	}
@@ -95,6 +96,11 @@ Settings samples :
 	function touch()
 	{
 		touch($this->getPath());
+	}
+
+	function invalidate()
+	{
+		$this->write($this->read(),true);
 	}
 
 	function flush()
