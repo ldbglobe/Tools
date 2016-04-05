@@ -1,4 +1,7 @@
 <?php
+// Author http://stackoverflow.com/users/1714705/jasper
+// Source http://stackoverflow.com/questions/1971721/how-to-use-http-cache-headers-with-php
+
 namespace ldbglobe\tools\Http;
 
 class Cache {
