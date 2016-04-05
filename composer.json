@@ -21,6 +21,12 @@
         "guzzlehttp/guzzle": "^6.2"
     },
     "autoload": {
-        "classmap": ["Cache.php","Entity.php","Http/Redirect.php","Page.php","PageComponent.php"]
+        "classmap": [
+        	"Cache.php",
+        	"Entity.php",
+        	"Http/Redirect.php",
+        	"Http/Cache.php",
+        	"Page.php",
+        	"PageComponent.php"]
     }
 }
