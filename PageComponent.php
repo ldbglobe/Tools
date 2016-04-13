@@ -37,7 +37,11 @@ Settings samples :
 	}
 	function flush()
 	{
-		echo $this->read();
+		$output = $this->read();
+		if($output!==false)
+			echo $output;
+		else
+			echo 'Component '.$this->name.' does not exist';
 	}
 
 	function set($name,$value)
