@@ -35,6 +35,10 @@ Settings samples :
 		}
 		return false;
 	}
+	function json()
+	{
+		return json_decode($this->read());
+	}
 	function flush()
 	{
 		$output = $this->read();
