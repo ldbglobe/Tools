@@ -89,6 +89,7 @@ Settings samples :
 			$data = unserialize(file_get_contents($this->getPath()));
 			return $data['creation_time'] - (time()-$this->ttl);
 		}
+		return -1;
 	}
 
 	function exists()
