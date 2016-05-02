@@ -72,8 +72,8 @@ Settings samples :
 	static function ExternalToStorage($url,$ttl, $storage=null)
 	{
 		$cache = new self('loadUrl'.$url,$ttl,$storage);
-		if(!$cache->isUpToDate())
-			$cache->captureUrl($url);
+		if(!empty($url) && !$cache->isUpToDate())
+				$cache->captureUrl($url);
 		return $cache;
 	}
 
