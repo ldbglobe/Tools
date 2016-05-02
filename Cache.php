@@ -105,7 +105,7 @@ Settings samples :
 	function captureUrl($url)
 	{
 		$client = new \GuzzleHttp\Client();
-		$response = $client->request('GET',$url,['http_errors'=>false]);
+		$response = $client->request('GET',$url,['verify'=>false, 'http_errors'=>false]);
 		if($response->getStatusCode() == 200)
 			$this->write((string)$response->getBody());
 	}
