@@ -24,6 +24,51 @@ Settings samples :
 		$this->ttl = $ttl;
 	}
 
+	static function Purge($storage,$ttl)
+	{
+		$response = (object)array(
+			'deleted'=>0,
+			'remaining'=>0,
+		);
+		$basedir = self::$storageRoot.'/'.$storage;
+		if(file_exists($basedir) && is_dir($basedir))
+		{
+			$l0 = opendir($basedir);
+			while($d0 = readdir($l0))
+			{
+				if($d0!='.' && $d0!='..' && is_dir($basedir.'/'.$d0))
+				{
+					$l1 = opendir($basedir.'/'.$d0);
+					while($d1 = readdir($l1))
+					{
+						if($d1!='.' && $d1!='..' && is_dir($basedir.'/'.$d0.'/'.$d1))
+						{
+							$l2 = opendir($basedir.'/'.$d0.'/'.$d1);
+							while($d2 = readdir($l2))
+							{
+								if($d2!='.' && $d2!='..' && is_file($basedir.'/'.$d0.'/'.$d1.'/'.$d2))
+								{
+									if(filemtime($basedir.'/'.$d0.'/'.$d1.'/'.$d2) < time() - $ttl)
+									{
+										$response->deleted++;
+										@unlink(realpath($basedir.'/'.$d0.'/'.$d1.'/'.$d2));
+									}
+									else
+									{
+										$response->remaining++;
+									}
+								}
+							}
+							@rmdir(realpath($basedir.'/'.$d0.'/'.$d1.'/'));
+						}
+					}
+					@rmdir(realpath($basedir.'/'.$d0.'/'));
+				}
+			}
+		}
+		return $response;
+	}
+
 	static function ExternalToStorage($url,$ttl, $storage=null)
 	{
 		$cache = new self('loadUrl'.$url,$ttl,$storage);
