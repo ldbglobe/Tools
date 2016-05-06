@@ -70,9 +70,9 @@ Settings samples :
 		return $response;
 	}
 
-	static function ExternalToStorage($url,$ttl, $storage=null)
+	static function ExternalToStorage($url,$ttl, $storage=null,$ext=null)
 	{
-		$cache = new self('loadUrl'.$url,$ttl,$storage);
+		$cache = new self('loadUrl'.$url,$ttl,$storage,$ext);
 		if(!empty($url) && !$cache->isUpToDate())
 				$cache->captureUrl($url);
 		return $cache;
