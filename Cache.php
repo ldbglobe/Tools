@@ -7,7 +7,7 @@ class Cache {
 	static $storageDefault = null;
 	static $forceUpdate = false;
 
-	function __construct($uid, $ttl, $storage=null)
+	function __construct($uid, $ttl, $storage=null, $ext=null)
 	{
 		if(!file_exists(self::$storageRoot) || !is_dir(self::$storageRoot))
 			throw new \Exception(
@@ -22,6 +22,7 @@ Settings samples :
 		$this->storage = $storage;
 		$this->uid = preg_replace('/^(..)(..)/','\\1/\\2/',sha1($uid));
 		$this->ttl = $ttl;
+		$this->ext = $ext;
 	}
 
 	static function Purge($storage,$ttl)
@@ -80,7 +81,7 @@ Settings samples :
 	function getPath($basepath=null)
 	{
 		$basepath = $basepath!==NULL ? $basepath.'/' : self::$storageRoot.'/';
-		return $basepath.$this->storage.'/'.$this->uid;
+		return $basepath.$this->storage.'/'.$this->uid.($this->ext ? '.'.$this->ext:'');
 	}
 
 	function timeLeft() {
