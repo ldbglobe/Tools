@@ -25,9 +25,13 @@ Settings samples :
 		return self::$componentRoot.'/'.$this->name.'.php';
 	}
 
+	function exist()
+	{
+		return file_exists($this->getPath());
+	}
 	function read()
 	{
-		if(file_exists($this->getPath()))
+		if($this->exist())
 		{
 			ob_start();
 			require($this->getPath());
@@ -37,7 +41,7 @@ Settings samples :
 	}
 	function readReturn()
 	{
-		if(file_exists($this->getPath()))
+		if($this->exist())
 		{
 			return require($this->getPath());
 		}
@@ -45,7 +49,7 @@ Settings samples :
 	}
 	function readBoth()
 	{
-		if(file_exists($this->getPath()))
+		if($this->exist())
 		{
 			ob_start();
 			$return = require($this->getPath());
