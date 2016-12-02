@@ -43,6 +43,17 @@ Settings samples :
 		}
 		return false;
 	}
+	function readBoth()
+	{
+		if(file_exists($this->getPath()))
+		{
+			ob_start();
+			$return = require($this->getPath());
+			$display = ob_get_clean();
+			return (object)array('return'=>$return,'display'=>$display);
+		}
+		return false;
+	}
 	function json()
 	{
 		return json_decode($this->read());
