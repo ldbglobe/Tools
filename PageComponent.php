@@ -35,6 +35,14 @@ Settings samples :
 		}
 		return false;
 	}
+	function readReturn()
+	{
+		if(file_exists($this->getPath()))
+		{
+			return require($this->getPath());
+		}
+		return false;
+	}
 	function json()
 	{
 		return json_decode($this->read());
