@@ -2,6 +2,15 @@
 namespace ldbglobe\tools;
 
 class Cache {
+	static $stats = array(
+		'instance'=>0,
+		'global'=>0,
+		'time'=>array(
+			'write'=>0,
+			'read'=>0,
+			'touch'=>0,
+			),
+		);
 	static $storageFolder = null;
 	static $storageRoot = null;
 	static $storageDefault = null;
@@ -9,6 +18,9 @@ class Cache {
 
 	function __construct($uid, $ttl, $storage=null, $ext=null)
 	{
+		self::$stats['instance']++;
+		$this->_timer = microtime(true);
+
 		if(!file_exists(self::$storageRoot) || !is_dir(self::$storageRoot))
 			throw new \Exception(
 "Invalid storage directory
@@ -125,24 +137,30 @@ Settings samples :
 	{
 		$time = $invalidate ? 0:time();
 		@mkdir(dirname($this->getPath()),0777,true);
-		return file_put_contents($this->getPath(),serialize(array(
+		$r = file_put_contents($this->getPath(),serialize(array(
 			'creation_time'=>$time,
 			'content'=>$content,
 			)));
+		$this->stats('write');
+		return $r;
 	}
 
 	function read()
 	{
+		$r = null;
 		if(file_exists($this->getPath()))
 		{
 			$data = unserialize(file_get_contents($this->getPath()));
-			return $data['content'];
+			$r = $data['content'];
 		}
+		$this->stats('read');
+		return $r;
 	}
 
 	function touch()
 	{
 		touch($this->getPath());
+		$this->stats('touch');
 	}
 
 	function invalidate()
@@ -153,5 +171,13 @@ Settings samples :
 	function flush()
 	{
 		echo $this->read();
+	}
+
+	function stats($operation=null)
+	{
+		self::$stats['global'] += microtime(true) - $this->_timer;
+		if($operation && isset(self::$stats['time'][$operation]))
+			self::$stats['time'][$operation] += microtime(true) - $this->_timer;
+		$this->_timer = microtime(true);
 	}
 }
