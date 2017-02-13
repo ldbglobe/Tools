@@ -4,10 +4,18 @@ namespace ldbglobe\tools;
 use ldbglobe\tools\PageComponentCapture;
 
 class PageComponent {
+	static $stats = array(
+		'instance'=>0,
+		'global'=>0,
+		'time'=>array(),
+	);
 	static $componentRoot = null;
 
 	function __construct($name, $request)
 	{
+		self::$stats['instance']++;
+		$this->_timer = microtime(true);
+
 		if(!file_exists(self::$componentRoot) || !is_dir(self::$componentRoot))
 			throw new \Exception(
 "Invalid component directory
@@ -35,6 +43,7 @@ Settings samples :
 		{
 			ob_start();
 			require($this->getPath());
+			$this->stats();
 			return ob_get_clean();
 		}
 		return false;
@@ -94,5 +103,14 @@ Settings samples :
 	function component($componentName)
 	{
 		return new PageComponent($componentName, $this->request);
+	}
+
+	function stats()
+	{
+		self::$stats['global'] += microtime(true) - $this->_timer;
+		if(!isset(self::$stats['time'][$this->name]))
+			self::$stats['time'][$this->name] = 0;
+		self::$stats['time'][$this->name] += microtime(true) - $this->_timer;
+		$this->_timer = microtime(true);
 	}
 }
