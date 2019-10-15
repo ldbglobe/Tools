@@ -35,21 +35,15 @@ class Entity extends \Model {
 		return \Model::factory($class_name ? $class_name:get_called_class(), $connection_name);
 	}
 
-	function save()
-	{
-		if(self::$__settings['id_mode']==='UUID')
-		{
-			if(!isset($this->id) || empty($this->id))
-			{
-				$this->id = Ramsey\Uuid\Uuid::uuid4();
-			}
-		}
-	}
-
 	// event hook (to override in your own entity extended classes)
 
 	function onCreate()
 	{
+		if(self::$__settings['id_mode']==='UUID')
+		{
+			$this->id = Ramsey\Uuid\Uuid::uuid4();
+		}
+
 		// override this function in your entity declaration
 		return $this;
 	}
