@@ -18,7 +18,8 @@
         "php": ">=5.2.0",
         "j4mie/idiorm": "^1.5.0",
         "j4mie/paris": "^1.5.0",
-        "guzzlehttp/guzzle": "^6.2"
+        "guzzlehttp/guzzle": "^6.2",
+        "ramsey/uuid": "^3.8.0"
     },
     "autoload": {
         "classmap": [
