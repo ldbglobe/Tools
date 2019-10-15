@@ -25,6 +25,7 @@
         "classmap": [
         	"Cache.php",
         	"Entity.php",
+            "Http/Request.php",
         	"Http/Redirect.php",
         	"Http/Cache.php",
         	"Page.php",
