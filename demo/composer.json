@@ -1,0 +1,15 @@
+{
+    "name": "mathieu/mmc_customers_assets_api",
+    "repositories": [
+        { "type": "git", "url": "https://github.com/ldbglobe/tools.git" }
+    ],
+    "require": {
+        "ldbglobe/tools": "dev-dev"
+    },
+    "authors": [
+        {
+            "name": "Mathieu Delestre",
+            "email": "ldbglobe@gmail.com"
+        }
+    ]
+}
