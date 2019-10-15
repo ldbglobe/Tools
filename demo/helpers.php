@@ -1,4 +1,7 @@
 <?php
+// feel free to tweak thoses helpers to handle additionnal url element
+// eg. language code injection in url
+// don't forget to update your routes definition accordingly
 function page_link($page,$query=null)
 {
 	return BASEPATH
