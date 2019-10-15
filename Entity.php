@@ -3,21 +3,8 @@ namespace ldbglobe\tools;
 
 class Entity extends \Model {
 
-	static private $__settings = array(
-		'id_mode'=>'autoinc', //[autoinc, UUID]
-	);
-
-	static function Settings($k,$v)
-	{
-		if(isset(self::$__settings[$k]))
-		{
-			self::$__settings[$k] = $v;
-		}
-		else
-		{
-			throw new Exception("Entity settings \"$k\" does not exist", 1);
-		}
-	}
+	public static $_id_column = 'id';
+	public static $_id_mode = 'autoinc';
 
 	// shortcut to manipulate paris model
 
@@ -39,7 +26,7 @@ class Entity extends \Model {
 
 	function onCreate()
 	{
-		if(self::$__settings['id_mode']==='UUID')
+		if(self::$_id_mode==='UUID')
 		{
 			$this->id = (string)\Ramsey\Uuid\Uuid::uuid4();
 		}
