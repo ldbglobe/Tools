@@ -41,7 +41,7 @@ class Entity extends \Model {
 	{
 		if(self::$__settings['id_mode']==='UUID')
 		{
-			$this->id = Ramsey\Uuid\Uuid::uuid4();
+			$this->id = \Ramsey\Uuid\Uuid::uuid4();
 		}
 
 		// override this function in your entity declaration
