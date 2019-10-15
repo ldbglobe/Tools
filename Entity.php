@@ -21,13 +21,13 @@ class Entity extends \Model {
 
 	// shortcut to manipulate paris model
 
-	static function create() // make a new ORM model instance ready to use and call onCreate hook
+	static function create($connection_name = NULL) // make a new ORM model instance ready to use and call onCreate hook
 	{
-		return \Model::factory(get_called_class())->create()->onCreate();
+		return \Model::factory(get_called_class(), $connection_name)->create()->onCreate();
 	}
-	static function load($id) // load an ORM instance from BDD and call onLoad hook
+	static function load($id, $connection_name = NULL) // load an ORM instance from BDD and call onLoad hook
 	{
-		$entity = \Model::factory(get_called_class())->where('id',$id)->find_one();
+		$entity = \Model::factory(get_called_class(), $connection_name)->where('id',$id)->find_one();
 		return $entity ? $entity->onLoad() : false;
 	}
 	static function factory($class_name=null, $connection_name = NULL) // return ORM wrapper instance to make querying through idiorm
