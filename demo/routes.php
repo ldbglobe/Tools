@@ -21,6 +21,16 @@ $route = new Route(
 
 // routes declaration
 
+$routes->add('dbtest', new Route(
+		'/dbtest',
+		array('_page' => 'dbtest'), // default value
+		array(), // requirements
+		array(),
+		null,
+		array(),
+		array('GET','POST'))
+	);
+
 $routes->add('test', new Route(
 		'/test/{param}',
 		array('_page' => 'test','param'=>'default-route-param'), // default value

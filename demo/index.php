@@ -3,6 +3,15 @@ session_start();
 require_once(__DIR__.'/vendor/autoload.php');
 require_once(__DIR__.'/helpers.php');
 
+# Install PSR-0-compatible autoloader for custom classes
+spl_autoload_register(function($class){
+	$file = __DIR__.'/classes/'.preg_replace('{\\\\|_(?!.*\\\\)}', DIRECTORY_SEPARATOR, ltrim($class, '\\')).'.php';
+	if(file_exists($file))
+		require_once($file);
+	else
+		return false;
+});
+
 use \ldbglobe\tools\Page;
 use \ldbglobe\tools\PageComponent;
 use \ldbglobe\tools\Http\Request;
@@ -26,6 +35,7 @@ try {
 	$page = (new Page($route,$request));
 	if($route && $page->exist())
 	{
+		require(__DIR__.'/db.php');
 		$page->flush();
 	}
 	else if(!$page->exist())
