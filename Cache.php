@@ -6,10 +6,12 @@ class Cache {
 		'instance'=>0,
 		'global'=>0,
 		'time'=>array(
-			'write'=>0,
+			'capture'=>0,
+			'captureUrl'=>0,
 			'read'=>0,
 			'touch'=>0,
 			),
+		'urls'=>[],
 		);
 	static $storageFolder = null;
 	static $storageRoot = null;
@@ -115,12 +117,41 @@ Settings samples :
 		return $this->timeLeft() > 0;
 	}
 
-	function captureUrl($url)
+	function http_request_get($url,$ip=null)
 	{
+		$curl = curl_init($url);
+		curl_setopt($curl, CURLOPT_URL, $url);
+
+		if($ip)
+			curl_setopt($curl, CURLOPT_RESOLVE, [$ip]);
+
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
+		curl_setopt($curl, CURLOPT_POSTREDIR, CURL_REDIR_POST_ALL);
+
+		$resp = curl_exec($curl);
+		curl_close($curl);
+		return $resp;
+	}
+
+	function captureUrl($url,$ip=null)
+	{
+		$timer = microtime(true);
+		$response = $this->http_request_get($url);
+		$this->write((string)$response);
+		$this->stats('captureUrl',$timer);
+
+		self::$stats['urls'][] = [$url,microtime(true)-$timer];
+
+		/*
 		$client = new \GuzzleHttp\Client();
 		$response = $client->request('GET',$url,['verify'=>false, 'http_errors'=>false]);
 		if($response->getStatusCode() == 200)
 			$this->write((string)$response->getBody());
+		$this->stats('captureUrl',$timer);
+		*/
 	}
 
 	function captureStart()
@@ -131,6 +162,7 @@ Settings samples :
 	function captureEnd()
 	{
 		$this->write(ob_get_clean());
+		$this->stats('capture');
 	}
 
 	function write($content,$invalidate=false)
@@ -141,19 +173,19 @@ Settings samples :
 			'creation_time'=>$time,
 			'content'=>$content,
 			)));
-		$this->stats('write');
 		return $r;
 	}
 
 	function read()
 	{
+		$timer = microtime(true);
 		$r = null;
 		if(file_exists($this->getPath()))
 		{
 			$data = unserialize(file_get_contents($this->getPath()));
 			$r = $data['content'];
 		}
-		$this->stats('read');
+		$this->stats('read',$timer);
 		return $r;
 	}
 
@@ -173,11 +205,16 @@ Settings samples :
 		echo $this->read();
 	}
 
-	function stats($operation=null)
+	function stats($operation=null,$custom_timer=null)
 	{
-		self::$stats['global'] += microtime(true) - $this->_timer;
+		$_timer = $custom_timer ? $custom_timer : $this->_timer;
+		if(!$custom_timer)
+			self::$stats['global'] += microtime(true) - $_timer;
+
 		if($operation && isset(self::$stats['time'][$operation]))
-			self::$stats['time'][$operation] += microtime(true) - $this->_timer;
-		$this->_timer = microtime(true);
+			self::$stats['time'][$operation] += microtime(true) - $_timer;
+
+		if(!$custom_timer)
+			$this->_timer = microtime(true);
 	}
 }
