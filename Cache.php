@@ -125,6 +125,7 @@ Settings samples :
 		if($ip)
 			curl_setopt($curl, CURLOPT_RESOLVE, [$ip]);
 
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
